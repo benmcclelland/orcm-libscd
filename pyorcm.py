@@ -1,3 +1,4 @@
+import os, ctypes
 from ctypes import *
 
 STRING = c_char_p
@@ -12,7 +13,11 @@ class liborcm_node_t (Structure):
 
 __all__ = ['orcm_node_state_t', 'liborcm_node_t', 'int8_t']
 
-orcm = CDLL("liborcmscd.so")
+if "posix" in os.name:
+    orcm = CDLL("liborcmscd.so", mode=ctypes.RTLD_GLOBAL)
+else:
+    orcm = CDLL("liborcmscd.so")
+
 P_node_t = POINTER(liborcm_node_t)
 PP_node_t = POINTER(P_node_t)
 orcm.get_nodes.argtypes = [POINTER(PP_node_t), POINTER(c_int)]

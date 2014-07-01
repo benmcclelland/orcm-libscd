@@ -1,0 +1,1 @@
+orcmcc -g -c -Wall -Werror -fpic liborcmscd.c && orcmcc -shared -g -o liborcmscd.so liborcmscd.o
